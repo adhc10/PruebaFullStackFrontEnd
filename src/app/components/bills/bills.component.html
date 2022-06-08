@@ -1,0 +1,72 @@
+<form (ngSubmit)="insertData()">
+    <div class="form-group">
+        <label for="bill_number">Numero de Factura</label>
+        <input type="text" name="bill_number" 
+        class="form-control" [formControl]="bill_numberCtrl"
+        [(ngModel)]="bill.bill_number">
+        <div>
+            <p *ngIf="bill_numberCtrl.errors && bill_numberCtrl.dirty">
+                <small *ngIf="bill_numberCtrl.hasError('required')">El campo es requerido</small>
+                <small *ngIf="bill_numberCtrl.hasError('minlength')">Debe ser de 5 digitos</small>
+                <small *ngIf="bill_numberCtrl.hasError('maxlength')">Debe ser de 5 digitos</small>
+            </p>
+        </div>
+    </div>    
+    <div class="form-group">
+        <label for="total">Valor Total</label>
+        <input type="text" class="form-control" [formControl]="totalCtrl" name="total" [(ngModel)]="bill.total">
+        <div>
+            <p *ngIf="totalCtrl.errors && totalCtrl.dirty">
+                <small *ngIf="totalCtrl.hasError('required')">El campo es requerido</small>
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="company">Nombre de la Empresa</label>
+        <input type="text" name="company" class="form-control" [formControl]="companyCtrl" [(ngModel)]="bill.company">
+        <div>
+            <p *ngIf="companyCtrl.errors && companyCtrl.dirty">
+                <small *ngIf="companyCtrl.hasError('required')">El campo es requerido</small>
+                <small *ngIf="companyCtrl.hasError('minlength')">Debe ser mínimo de 3</small>
+                <small *ngIf="companyCtrl.hasError('maxlength')">Debe ser maximo de 15</small>
+            </p>
+        </div>
+    </div>
+    <div class="form-group">        
+        <label for="idclient">Cliente</label>
+        <select name="idclient" id="idclient" [formControl]="idclientCtrl" class="form-control" [(ngModel)]="bill.cliente">                
+            <option value="{{ cli.id }}" *ngFor="let cli of client" >{{ cli.name }}</option>
+        </select>
+    </div>
+    <button [disabled]="bill_numberCtrl.invalid"  
+    [disabled]="totalCtrl.invalid"
+    [disabled]="companyCtrl.invalid"
+    [disabled]="idclientCtrl.invalid"
+    class="btn btn-dark btn-sm mt-4">Crear</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Numero de Factura</th>
+            <th scope="col">Valor Total</th>
+            <th scope="col">Nombre de la Empresa</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let bil of bills">
+            <th scope="row">{{ bil.id }}</th>
+            <td>{{ bil.client }}</td>
+            <td>{{ bil.bill_number }}</td>
+            <td>{{ bil.total }}</td>
+            <td>{{ bil.company }}</td>            
+            <td>
+                <button class="btn btn-danger btm-sm" (click)="deleteData(bil.id)">Delete</button>
+                <button class="btn btn-warning btm-sm mx-2" routerLink="/editBill/{{bil.id}}">Edit</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,20 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Mensaje</th>
+            <th scope="col">Excepcion</th>
+            <th scope="col">Metodo</th>
+            <th scope="col">Codigo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let ex of exceptions">
+            <th scope="row">{{ ex.id }}</th>
+            <td>{{ ex.message }}</td>
+            <td>{{ ex.exception }}</td>
+            <td>{{ ex.method }}</td>
+            <td>{{ ex.code }}</td>
+        </tr>
+    </tbody>
+</table>
